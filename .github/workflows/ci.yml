@@ -23,5 +23,19 @@ jobs:
         run: npm install
       - name: Type check
         run: npm run check
+      # Behaviour and automated accessibility checks. The accessibility
+      # assertions run axe over every component.
+      - name: Test
+        run: npm test
       - name: Build
         run: npm run build
+      # A consumer-visible change without a changeset would be released with
+      # no version bump and no changelog entry, so the absence is reported.
+      - name: Check for a changeset
+        if: github.event_name == 'pull_request'
+        run: |
+          if git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -qE '^src/'; then
+            if ! ls .changeset/*.md 2>/dev/null | grep -qv 'README.md'; then
+              echo "::warning::This pull request changes src/ but adds no changeset. Run 'npx changeset' to describe the change for consumers."
+            fi
+          fi
