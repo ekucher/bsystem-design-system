@@ -1,0 +1,41 @@
+:root {
+  color-scheme: dark;
+  --bs-color-bg: #0d1117;
+  --bs-color-surface: #161b22;
+  --bs-color-surface-raised: #21262d;
+  --bs-color-border: #30363d;
+  --bs-color-text: #f0f6fc;
+  --bs-color-text-muted: #8b949e;
+  --bs-color-primary: #2f81f7;
+  --bs-color-success: #3fb950;
+  --bs-color-warning: #d29922;
+  --bs-color-danger: #f85149;
+  --bs-color-focus: #58a6ff;
+
+  --bs-font-sans: Inter, Roboto, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --bs-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --bs-space-1: 0.25rem;
+  --bs-space-2: 0.5rem;
+  --bs-space-3: 0.75rem;
+  --bs-space-4: 1rem;
+  --bs-space-5: 1.25rem;
+  --bs-space-6: 1.5rem;
+  --bs-space-8: 2rem;
+
+  --bs-radius-sm: 6px;
+  --bs-radius-md: 10px;
+  --bs-radius-lg: 16px;
+
+  --bs-shadow-raised: 0 8px 24px rgb(1 4 9 / 35%);
+  --bs-control-height: 2.5rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:focus-visible {
+  outline: 2px solid var(--bs-color-focus);
+  outline-offset: 2px;
+}
