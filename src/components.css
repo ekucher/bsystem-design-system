@@ -1,0 +1,56 @@
+.bs-button {
+  min-height: var(--bs-control-height);
+  border: 1px solid transparent;
+  border-radius: var(--bs-radius-md);
+  padding: 0 var(--bs-space-4);
+  font: 600 0.875rem/1 var(--bs-font-sans);
+  cursor: pointer;
+}
+
+.bs-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.bs-button--primary {
+  background: var(--bs-color-primary);
+  color: white;
+}
+
+.bs-button--secondary {
+  background: var(--bs-color-surface-raised);
+  border-color: var(--bs-color-border);
+  color: var(--bs-color-text);
+}
+
+.bs-button--danger {
+  background: var(--bs-color-danger);
+  color: white;
+}
+
+.bs-card {
+  border: 1px solid var(--bs-color-border);
+  border-radius: var(--bs-radius-lg);
+  background: var(--bs-color-surface);
+  color: var(--bs-color-text);
+  padding: var(--bs-space-5);
+}
+
+.bs-card--elevated {
+  box-shadow: var(--bs-shadow-raised);
+}
+
+.bs-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0 var(--bs-space-2);
+  border-radius: 999px;
+  font: 600 0.75rem/1 var(--bs-font-sans);
+  background: var(--bs-color-surface-raised);
+  color: var(--bs-color-text-muted);
+}
+
+.bs-badge--success { color: var(--bs-color-success); }
+.bs-badge--warning { color: var(--bs-color-warning); }
+.bs-badge--danger { color: var(--bs-color-danger); }
