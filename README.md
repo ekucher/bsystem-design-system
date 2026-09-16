@@ -1,130 +1,91 @@
 # BSYSTEM Design System
 
-Shared visual language and UI foundation for BSYSTEM Platform products.
+Accessible, token-driven UI primitives for the BSYSTEM Platform.
 
-## Package
+The package holds **no business logic**. A component here knows about layout,
+state and accessibility; it knows nothing about clients, projects or adapters.
 
-```text
-@bsystem/design-system
-```
-
-Current baseline exports:
-
-```text
-Button
-Card
-Badge
-./tokens.css
-./components.css
-```
-
-The package is intentionally private until a package publishing strategy is selected. Consumers should not copy component implementations into their own repositories.
-
-## Local development
+## Install
 
 ```bash
-npm install
-npm run check
-npm run build
+npm install @bsystem/design-system
 ```
-
-CI performs TypeScript type-checking and package build on every push and pull request.
-
-## Usage contract
-
-A future consuming application should import the shared styles once at its application root:
 
 ```ts
 import "@bsystem/design-system/tokens.css";
 import "@bsystem/design-system/components.css";
+import { Alert, Button, Table } from "@bsystem/design-system";
 ```
 
-and components from the package:
+Consume a published version, never the `main` branch — see
+[docs/RELEASING.md](docs/RELEASING.md).
 
-```tsx
-import { Badge, Button, Card } from "@bsystem/design-system";
+## Components
+
+| | |
+| --- | --- |
+| Actions | `Button`, `Dropdown` |
+| Layout | `Card`, `Table`, `Tabs` |
+| Forms | `Input`, `Textarea`, `Select` |
+| Feedback | `Alert`, `Spinner`, `Skeleton` |
+| Status | `Badge`, `StatusBadge` |
+| Navigation | `Breadcrumbs`, `Pagination` |
+
+## Tokens
+
+Two layers, deliberately separated:
+
+- **Primitives** — raw values with no meaning of their own (`--bs-gray-700`).
+- **Semantics** — what a value is *for* (`--bs-color-surface`).
+
+Components only ever reference semantic tokens. A component that reaches past
+one to a primitive cannot be re-themed, because the theme is exactly the
+mapping between the two layers.
+
+### Theming
+
+BSYSTEM is dark by default. Light is applied when the reader's system asks for
+it, and either theme can be forced:
+
+```html
+<html data-theme="light">
+<html data-theme="dark">
 ```
 
-Do not hardcode semantic colors in product components when an equivalent design token exists.
+Only the semantic mapping changes. No component is aware which theme is active.
 
-## Design tokens
+## Accessibility
 
-Initial tokens cover:
+Accessibility is asserted in the test suite, not assumed:
 
-- application/background surfaces;
-- text and muted text;
-- border;
-- primary action;
-- success/warning/danger/focus states;
-- typography;
-- spacing;
-- radii;
-- elevation;
-- control height.
+- Every field is associated with its label, and its description and error are
+  announced with it.
+- Alerts interrupt for warnings and errors, and wait for a pause for
+  information and success. Interrupting someone to say a thing worked is an
+  interruption for nothing.
+- The dialog moves focus in, traps `Tab`, closes on `Escape` and **returns
+  focus to whatever opened it** — without which a keyboard user is dropped at
+  the top of the document.
+- Tabs use a roving tabindex with arrow, `Home` and `End` keys, so the tab list
+  is one stop in the page order rather than one stop per tab.
+- The dropdown is a menu: `ArrowDown`/`ArrowUp` open it at either end, arrows
+  wrap, `Escape` closes and returns focus, and a click outside dismisses it.
+- Colour never carries meaning alone. Status badges render their status as
+  text, alerts name their tone, invalid fields are marked and outlined, and the
+  selected tab is weighted and underlined as well as coloured.
+- Animation is removed for readers who ask for reduced motion.
 
-The current baseline is dark-theme first. Additional themes should override tokens rather than fork components.
+`npm test` runs axe over every component. Automated checks cover only part of
+what accessibility means — they cannot tell whether a label is accurate or
+whether focus goes somewhere useful — so the behavioural tests cover those
+directly. What automation catches is the part that regresses silently.
 
-## Foundational components
+## Development
 
-### Button
-
-Variants:
-
-```text
-primary
-secondary
-danger
+```bash
+npm install
+npm run check   # types
+npm test        # behaviour and accessibility
+npm run build   # dist/
+npx changeset   # describe a consumer-visible change
 ```
-
-### Card
-
-Supports standard and elevated surfaces.
-
-### Badge
-
-Semantic tones:
-
-```text
-neutral
-success
-warning
-danger
-```
-
-## Semantic status model
-
-```text
-GREEN   = success / healthy / OK
-BLUE    = information
-YELLOW  = warning
-ORANGE  = degraded
-RED     = error / critical
-GRAY    = unknown / disabled
-```
-
-## Platform principles
-
-- accessible by default;
-- consistent interaction patterns across BSYSTEM-owned products;
-- responsive and desktop-first for operational products;
-- no business-domain logic in UI primitives;
-- semantic colors come from tokens;
-- shared components must not depend on HUB authorization or API clients;
-- third-party products are themed only through supported extension mechanisms;
-- avoid upstream core forks merely to reproduce BSYSTEM visual styling.
-
-## Consumers
-
-Planned consumers:
-
-- BSYSTEM-HUB
-- BSYSTEM QA
-- BSYSTEM Development
-- BSYSTEM Operations
-- BSYSTEM Support
-- Customer Portal
-- BSYSTEM AI interfaces
-
-Before HUB consumes this package directly, choose one reproducible distribution mechanism (for example GitHub Packages or another internal npm registry) and pin package versions. Do not depend on an unbuilt `main` branch at runtime.
-
-See [Architecture](docs/ARCHITECTURE.md) and [Roadmap](docs/ROADMAP.md).

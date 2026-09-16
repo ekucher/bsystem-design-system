@@ -1,6 +1,6 @@
 {
   "name": "@bsystem/design-system",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "main": "./dist/index.js",
@@ -13,20 +13,50 @@
     "./tokens.css": "./src/tokens.css",
     "./components.css": "./src/components.css"
   },
-  "files": ["dist", "src/tokens.css", "src/components.css"],
+  "files": [
+    "dist",
+    "src/tokens.css",
+    "src/components.css"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "check": "tsc -p tsconfig.json --noEmit"
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "prepack": "npm run build"
   },
   "peerDependencies": {
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0"
   },
   "devDependencies": {
+    "@changesets/cli": "2.29.7",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.0",
+    "@testing-library/user-event": "14.6.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "axe-core": "4.11.0",
+    "jsdom": "27.0.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "typescript": "^7.0.2"
-  }
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
+  },
+  "description": "Accessible, token-driven UI primitives for the BSYSTEM Platform.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekucher/bsystem-design-system.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "sideEffects": [
+    "*.css"
+  ]
 }

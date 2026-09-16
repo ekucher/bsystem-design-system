@@ -1,16 +1,44 @@
+/*
+ * BSYSTEM design tokens.
+ *
+ * Two layers, deliberately separated:
+ *
+ *   Primitives  raw values with no meaning of their own (--bs-gray-700).
+ *   Semantics   what a value is for (--bs-color-surface). Components only
+ *               ever reference these.
+ *
+ * A component that reaches past a semantic token to a primitive cannot be
+ * re-themed, because the theme is exactly the mapping between the two layers.
+ *
+ * BSYSTEM is dark by default. A light theme is applied when the reader's
+ * system asks for one, and either theme can be forced with `data-theme` on the
+ * root element — which is what a user-facing theme switch sets.
+ */
+
 :root {
-  color-scheme: dark;
-  --bs-color-bg: #0d1117;
-  --bs-color-surface: #161b22;
-  --bs-color-surface-raised: #21262d;
-  --bs-color-border: #30363d;
-  --bs-color-text: #f0f6fc;
-  --bs-color-text-muted: #8b949e;
-  --bs-color-primary: #2f81f7;
-  --bs-color-success: #3fb950;
-  --bs-color-warning: #d29922;
-  --bs-color-danger: #f85149;
-  --bs-color-focus: #58a6ff;
+  /* --- Primitives ------------------------------------------------------ */
+
+  --bs-gray-950: #0d1117;
+  --bs-gray-900: #161b22;
+  --bs-gray-850: #21262d;
+  --bs-gray-800: #30363d;
+  --bs-gray-600: #6e7681;
+  --bs-gray-500: #8b949e;
+  --bs-gray-300: #c9d1d9;
+  --bs-gray-200: #d0d7de;
+  --bs-gray-100: #eaeef2;
+  --bs-gray-50: #f6f8fa;
+  --bs-white: #ffffff;
+
+  --bs-blue-600: #0969da;
+  --bs-blue-500: #2f81f7;
+  --bs-blue-400: #58a6ff;
+  --bs-green-600: #1a7f37;
+  --bs-green-500: #3fb950;
+  --bs-amber-600: #9a6700;
+  --bs-amber-500: #d29922;
+  --bs-red-600: #cf222e;
+  --bs-red-500: #f85149;
 
   --bs-font-sans: Inter, Roboto, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --bs-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -27,15 +55,154 @@
   --bs-radius-md: 10px;
   --bs-radius-lg: 16px;
 
-  --bs-shadow-raised: 0 8px 24px rgb(1 4 9 / 35%);
   --bs-control-height: 2.5rem;
+  --bs-z-overlay: 1000;
+
+  /* --- Semantics: dark (the default) ----------------------------------- */
+
+  color-scheme: dark;
+
+  --bs-color-bg: var(--bs-gray-950);
+  --bs-color-surface: var(--bs-gray-900);
+  --bs-color-surface-raised: var(--bs-gray-850);
+  --bs-color-surface-sunken: #010409;
+  --bs-color-border: var(--bs-gray-800);
+  --bs-color-border-strong: var(--bs-gray-600);
+  --bs-color-text: #f0f6fc;
+  --bs-color-text-muted: var(--bs-gray-500);
+  --bs-color-text-on-accent: var(--bs-white);
+
+  --bs-color-primary: var(--bs-blue-500);
+  --bs-color-primary-hover: var(--bs-blue-400);
+  --bs-color-success: var(--bs-green-500);
+  --bs-color-warning: var(--bs-amber-500);
+  --bs-color-danger: var(--bs-red-500);
+  --bs-color-focus: var(--bs-blue-400);
+
+  /* Tinted surfaces for status messages. Colour alone never carries meaning
+     in BSYSTEM components — each is paired with an icon or with text. */
+  --bs-color-info-surface: rgb(47 129 247 / 12%);
+  --bs-color-success-surface: rgb(63 185 80 / 12%);
+  --bs-color-warning-surface: rgb(210 153 34 / 14%);
+  --bs-color-danger-surface: rgb(248 81 73 / 12%);
+
+  --bs-shadow-raised: 0 8px 24px rgb(1 4 9 / 35%);
+  --bs-overlay-scrim: rgb(1 4 9 / 60%);
 }
+
+/* --- Semantics: light ---------------------------------------------------- */
+
+/*
+ * The light mapping lives in one place and is applied either because the
+ * reader's system asks for it or because the application forces it. Only the
+ * semantic layer changes; no component is aware which theme is active.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+
+    --bs-color-bg: var(--bs-gray-50);
+    --bs-color-surface: var(--bs-white);
+    --bs-color-surface-raised: var(--bs-white);
+    --bs-color-surface-sunken: var(--bs-gray-100);
+    --bs-color-border: var(--bs-gray-200);
+    --bs-color-border-strong: var(--bs-gray-600);
+    --bs-color-text: #1f2328;
+    --bs-color-text-muted: #59636e;
+    --bs-color-text-on-accent: var(--bs-white);
+
+    --bs-color-primary: var(--bs-blue-600);
+    --bs-color-primary-hover: #0550ae;
+    --bs-color-success: var(--bs-green-600);
+    --bs-color-warning: var(--bs-amber-600);
+    --bs-color-danger: var(--bs-red-600);
+    --bs-color-focus: var(--bs-blue-600);
+
+    --bs-color-info-surface: rgb(9 105 218 / 8%);
+    --bs-color-success-surface: rgb(26 127 55 / 8%);
+    --bs-color-warning-surface: rgb(154 103 0 / 10%);
+    --bs-color-danger-surface: rgb(207 34 46 / 8%);
+
+    --bs-shadow-raised: 0 8px 24px rgb(31 35 40 / 12%);
+    --bs-overlay-scrim: rgb(31 35 40 / 45%);
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bs-color-bg: var(--bs-gray-50);
+  --bs-color-surface: var(--bs-white);
+  --bs-color-surface-raised: var(--bs-white);
+  --bs-color-surface-sunken: var(--bs-gray-100);
+  --bs-color-border: var(--bs-gray-200);
+  --bs-color-border-strong: var(--bs-gray-600);
+  --bs-color-text: #1f2328;
+  --bs-color-text-muted: #59636e;
+  --bs-color-text-on-accent: var(--bs-white);
+
+  --bs-color-primary: var(--bs-blue-600);
+  --bs-color-primary-hover: #0550ae;
+  --bs-color-success: var(--bs-green-600);
+  --bs-color-warning: var(--bs-amber-600);
+  --bs-color-danger: var(--bs-red-600);
+  --bs-color-focus: var(--bs-blue-600);
+
+  --bs-color-info-surface: rgb(9 105 218 / 8%);
+  --bs-color-success-surface: rgb(26 127 55 / 8%);
+  --bs-color-warning-surface: rgb(154 103 0 / 10%);
+  --bs-color-danger-surface: rgb(207 34 46 / 8%);
+
+  --bs-shadow-raised: 0 8px 24px rgb(31 35 40 / 12%);
+  --bs-overlay-scrim: rgb(31 35 40 / 45%);
+}
+
+/* --- Base ---------------------------------------------------------------- */
 
 * {
   box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+  background: var(--bs-color-bg);
+  color: var(--bs-color-text);
+  font-family: var(--bs-font-sans);
+}
+
+/*
+ * A visible focus ring on everything focusable. Control styling routinely
+ * removes the browser default, and without a replacement a keyboard user
+ * cannot tell where they are.
+ */
 :focus-visible {
   outline: 2px solid var(--bs-color-focus);
   outline-offset: 2px;
+}
+
+/*
+ * Respect a reader who has asked for less motion. Animation in this library is
+ * decorative — a spinner, a skeleton shimmer — so removing it costs nothing.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Content for screen readers that must not occupy visual space. */
+.bs-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
