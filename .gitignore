@@ -5,4 +5,10 @@ dist/
 .env
 .env.*
 !.env.example
-dist/
+
+# Editor and OS noise. Listed once here rather than in each contributor's
+# global config, so a stray file cannot reach a review.
+Thumbs.db
+.idea/
+.vscode/
+*.swp
