@@ -79,6 +79,17 @@
   --bs-color-danger: var(--bs-red-500);
   --bs-color-focus: var(--bs-blue-400);
 
+  /* A solid accent fill, distinct from the accent colour above because the two
+     jobs pull in opposite directions. An accent used as *text* on the page
+     background has to be light enough to read against it; an accent used as a
+     *fill* under --bs-color-text-on-accent has to be dark enough for that text
+     to read against it. In the dark theme no single value does both:
+     --bs-blue-500 gives 5.05:1 as text on the page but only 3.75:1 under white,
+     and --bs-blue-600 reverses it. So the fill is its own token. In the light
+     theme the two coincide, and the mapping says so rather than hiding it. */
+  --bs-color-primary-solid: var(--bs-blue-600);
+  --bs-color-danger-solid: var(--bs-red-600);
+
   /* Tinted surfaces for status messages. Colour alone never carries meaning
      in BSYSTEM components — each is paired with an icon or with text. */
   --bs-color-info-surface: rgb(47 129 247 / 12%);
@@ -118,6 +129,9 @@
     --bs-color-danger: var(--bs-red-600);
     --bs-color-focus: var(--bs-blue-600);
 
+    --bs-color-primary-solid: var(--bs-blue-600);
+    --bs-color-danger-solid: var(--bs-red-600);
+
     --bs-color-info-surface: rgb(9 105 218 / 8%);
     --bs-color-success-surface: rgb(26 127 55 / 8%);
     --bs-color-warning-surface: rgb(154 103 0 / 10%);
@@ -147,6 +161,9 @@
   --bs-color-warning: var(--bs-amber-600);
   --bs-color-danger: var(--bs-red-600);
   --bs-color-focus: var(--bs-blue-600);
+
+  --bs-color-primary-solid: var(--bs-blue-600);
+  --bs-color-danger-solid: var(--bs-red-600);
 
   --bs-color-info-surface: rgb(9 105 218 / 8%);
   --bs-color-success-surface: rgb(26 127 55 / 8%);

@@ -13,8 +13,8 @@
 }
 
 .bs-button--primary {
-  background: var(--bs-color-primary);
-  color: white;
+  background: var(--bs-color-primary-solid);
+  color: var(--bs-color-text-on-accent);
 }
 
 .bs-button--secondary {
@@ -24,8 +24,8 @@
 }
 
 .bs-button--danger {
-  background: var(--bs-color-danger);
-  color: white;
+  background: var(--bs-color-danger-solid);
+  color: var(--bs-color-text-on-accent);
 }
 
 .bs-card {
