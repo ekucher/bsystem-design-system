@@ -44,7 +44,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.1"
+    "vitest": "^5.0.2"
   },
   "description": "Accessible, token-driven UI primitives for the BSYSTEM Platform.",
   "license": "UNLICENSED",
